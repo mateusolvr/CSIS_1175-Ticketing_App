@@ -15,7 +15,9 @@ namespace TicketingApp
         public char StudentCategory { get; set; }
         public int SpeedLimit { get; set; }
         public int SpeedReported { get; set; }
-        public string CategoryName { get
+        public string CategoryName
+        {
+            get
             {
                 switch (StudentCategory)
                 {
@@ -30,21 +32,25 @@ namespace TicketingApp
                     default:
                         return "Error";
                 }
-            } }
-        public double Fine { get
+            }
+        }
+        public double Fine
+        {
+            get
             {
                 double initialValue = 75;
                 double speedFee = SpeedFee(out int speedAboveLimit);
                 int feeModifier = FeeModifier(speedAboveLimit);
 
                 return initialValue + speedFee + feeModifier;
-            } }
+            }
+        }
 
         private double SpeedFee(out int speedAboveLimit)
         {
             speedAboveLimit = SpeedReported - SpeedLimit;
-            double speedFeed = Math.Floor((double)speedAboveLimit / SPEED_OVER_LIMIT) * FEE_OVER_LIMIT;
-            return speedFeed;
+            double speedFee = Math.Floor((double)speedAboveLimit / SPEED_OVER_LIMIT) * FEE_OVER_LIMIT;
+            return speedFee;
         }
 
         private int FeeModifier(int speedAboveLimit)
@@ -52,7 +58,7 @@ namespace TicketingApp
             switch (CategoryName)
             {
                 case "Senior":
-                    if (speedAboveLimit >= 20) { return 200; }
+                    if (speedAboveLimit > 20) { return 200; }
                     return 50;
                 case "Freshman":
                     if (speedAboveLimit < 20) { return -50; }
@@ -80,7 +86,7 @@ namespace TicketingApp
                                                     $"Speed Limit: {SpeedLimit}\n" +
                                                     $"Speed Reported: {SpeedReported}\n" +
                                                     $"Category Name: {CategoryName}\n" +
-                                                    $"Fine: {Fine}\n");
+                                                    $"Fine: {Fine:C}\n");
             return ticketDetails;
         }
     }
